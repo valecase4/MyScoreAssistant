@@ -1,28 +1,72 @@
 import customtkinter as ctk
-from .email_scraping import get_mail_client
-from .email_scraping import get_last_email
-from .utils import parse_email_body
-from .db import add_exam_to_db, create_table
+import imaplib
+from tkinter.messagebox import showerror
 
-def test():
-    text = get_last_email("310481@studenti.unimore.it")
+current_user = None
+
+def test(email_input, password_input):
+    email_address = email_input.get()
+    password = password_input.get()
     
-    text = parse_email_body(text)
-    create_table()
+    try:
+        SMTP_SERVER = 'imap.gmail.com'
+        SMTP_PORT = 993
 
-    add_exam_to_db(id='1', name=text["exam_name"], score=text["score"], date=text["exam_date"])
+        mail = imaplib.IMAP4_SSL(SMTP_SERVER, SMTP_PORT)
+        mail.login(email_address, password)
+
+        current_user = {
+            "email": email_address
+        }
+        
+        print(mail)
+        print("CURRENT USER: ", current_user)
+    
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        showerror("Login failed.", "Invalid email or password. Please check your credentials and try again.")
+        return None
+    
+    finally:
+        email_input.delete(0, "end")
+        password_input.delete(0, "end")
     
 
 def create_app():
+    
     app = ctk.CTk()
+
+    app.grid_rowconfigure(0, weight=1)
+    app.grid_rowconfigure(1, weight=0) 
+    app.grid_rowconfigure(2, weight=1) 
+    app.grid_columnconfigure(0, weight=1)
+
+    screen_width = app.winfo_screenwidth()
+    screen_height = app.winfo_screenheight()
 
     ctk.set_appearance_mode("dark")
     ctk.set_default_color_theme("blue")
 
     app.title("MyScoreAssistant")
-    app.geometry("400x400")
+    app.geometry(f"{screen_width}x{screen_height}+0+0")
 
-    scrape_btn = ctk.CTkButton(app, text="Test Email", command=test)
-    scrape_btn.pack()
+    login_frame = ctk.CTkFrame(app, width=screen_width // 2, height= screen_height // 3)
+    for i in range(8):
+        login_frame.grid_rowconfigure(i, weight=1)
+    login_frame.grid_columnconfigure(0, weight=1)
+
+    login_frame.grid_propagate(False)
+    login_frame.grid(row=1, column=0)
+
+    email_input = ctk.CTkEntry(login_frame, placeholder_text="your-email@example.com", font=("Arial", 26))
+    email_input.configure(width=500, height=60)
+    email_input.grid(row=1, column=0)
+
+    password_input = ctk.CTkEntry(login_frame, placeholder_text="Password", font=("Arial", 26), show="*")
+    password_input.configure(width=500, height=60)
+    password_input.grid(row=3, column=0)
+
+    scrape_btn = ctk.CTkButton(login_frame, text="Login", font=("Arial", 30), command=lambda : test(email_input, password_input))
+    scrape_btn.grid(row=6, column=0)
 
     return app
