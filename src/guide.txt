@@ -1,0 +1,45 @@
+How to Log In
+Follow these steps to log in to MyScoreAssistant:
+
+1. Enable Two-Factor Authentication (2FA):
+
+Log in to your Google account.
+Go to Security Settings.
+Under "Signing in to Google", find and click on "2-Step Verification".
+Follow the prompts to activate two-factor authentication. You may need to provide a phone number for SMS verification or set up an authenticator app (like Google Authenticator).
+
+2. Search for the "App Passwords" Setting:
+
+After enabling 2FA, stay on the Security Settings page.
+If the "App Passwords" option is not visible:
+In the search bar at the top of the Security Settings page, type "App Passwords" and press Enter.
+Click on the "App Passwords" link that appears in the search results.
+
+3. Generate an App Password:
+
+If prompted, re-enter your Google account password.
+Select "Mail" as the application and "Other (Custom)" for the device.
+Name it "MyScoreAssistant" or anything similar.
+Click Generate, and Google will provide a 16-character password. Copy this password for use in the MyScoreAssistant application.
+
+4. Enable IMAP Access:
+
+Go to Gmail Settings > See all settings > Forwarding and POP/IMAP.
+Under IMAP Access, ensure IMAP is enabled so the app can access your emails.
+
+5. Enter Your Credentials:
+
+In the MyScoreAssistant login screen:
+Enter your university email address.
+Paste the App Password generated in Step 3 into the password field.
+
+6. Start the Application:
+
+After entering your credentials, click Log In.
+
+Why Enable Two-Factor Authentication and Use an App Password?
+Two-factor authentication (2FA) adds an extra layer of security to your Google account by requiring 
+a second verification step (e.g., a code sent to your phone). To safely allow third-party applications 
+like MyScoreAssistant to access your email, Google requires you to generate a unique App Password. 
+This ensures that your primary account credentials are kept private.
+
